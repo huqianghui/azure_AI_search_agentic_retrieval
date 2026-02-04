@@ -1,0 +1,66 @@
+{
+  "@odata.etag": "\"0x8DE62C952A289CF\"",
+  "name": "json-data-keyword-demo04-skillset",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.LanguageDetectionSkill",
+      "name": "languageDetectionSkill",
+      "context": "/document",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/content",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "languageCode",
+          "targetName": "language"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.V3.EntityRecognitionSkill",
+      "name": "entityRecognitionSkill",
+      "context": "/document/page_content",
+      "categories": [
+        "Person",
+        "Location",
+        "Organization"
+      ],
+      "defaultLanguageCode": "en",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/page_content",
+          "inputs": []
+        },
+        {
+          "name": "languageCode",
+          "source": "/document/language",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "persons",
+          "targetName": "persons"
+        },
+        {
+          "name": "locations",
+          "targetName": "locations"
+        },
+        {
+          "name": "organizations",
+          "targetName": "organizations"
+        }
+      ]
+    }
+  ],
+  "cognitiveServices": {
+    "@odata.type": "#Microsoft.Azure.Search.AIServicesByKey",
+    "key": "<redacted>",
+    "subdomainUrl": "https://hu-ai-service-4-content-undestanding-skill.cognitiveservices.azure.com/"
+  }
+}

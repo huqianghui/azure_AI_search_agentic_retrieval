@@ -1,0 +1,31 @@
+精确查询
+    网络
+        ER7206支持多少个WAN口？
+        SG3428X的交换容量是多少？
+        EAP660 HD支持的最大并发用户数是多少？
+        ER605是否支持负载均衡？
+        SG2210MP的PoE总功率是多少？
+
+模糊查询：
+    网络
+        哪款Omada路由器适合100人办公室？
+        哪些交换机适合部署在酒店？
+        哪款AP适合高密度场景？
+        哪些设备支持集中管理？
+        哪款设备适合VPN需求较多的企业？
+
+推理型问题
+    网络
+        如果需要部署50个AP，应该选择哪款PoE交换机？
+        如果企业需要双WAN冗余，哪款路由器更合适？
+        如果需要支持200人同时上网，哪款AP更适合？
+        如果需要VPN和负载均衡，哪款路由器更合适？
+        如果需要低功耗PoE交换机，哪款型号更好？
+
+产品对比
+    网络
+        is TP-Link MS105GP newer / better than LS105GP
+        what different for 610 650 & 625
+        what is the difference between EAP225-Outdoor and AC1200-Outdoor?
+        Differentiate SX3008F and TL-SX3008F
+        what's the difference between EAP772 & EAP773

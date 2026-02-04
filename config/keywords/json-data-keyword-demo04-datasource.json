@@ -1,0 +1,20 @@
+{
+  "@odata.context": "https://ai-search-southeast-asia.search.windows.net/$metadata#datasources/$entity",
+  "@odata.etag": "\"0x8DE62C951B0FC06\"",
+  "name": "json-data-keyword-demo04-datasource",
+  "description": null,
+  "type": "azureblob",
+  "subtype": null,
+  "indexerPermissionOptions": [],
+  "credentials": {
+    "connectionString": "DefaultEndpointsProtocol=https;AccountName=sa4contentunderstand;AccountKey=..."
+  },
+  "container": {
+    "name": "json-format-test-data4",
+    "query": null
+  },
+  "dataChangeDetectionPolicy": null,
+  "dataDeletionDetectionPolicy": null,
+  "encryptionKey": null,
+  "identity": null
+}

@@ -1,0 +1,253 @@
+{
+  "@odata.etag": "\"0x8DE62D0260EED0C\"",
+  "name": "json-data-rag-demo05",
+  "purviewEnabled": false,
+  "fields": [
+    {
+      "name": "chunk_id",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "stored": true,
+      "sortable": true,
+      "facetable": false,
+      "key": true,
+      "analyzer": "keyword",
+      "synonymMaps": []
+    },
+    {
+      "name": "parent_id",
+      "type": "Edm.String",
+      "searchable": false,
+      "filterable": true,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "synonymMaps": []
+    },
+    {
+      "name": "chunk",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "synonymMaps": []
+    },
+    {
+      "name": "text_vector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "dimensions": 3072,
+      "vectorSearchProfile": "json-data-rag-demo05-azureOpenAi-text-profile",
+      "synonymMaps": []
+    },
+    {
+      "name": "metadata",
+      "type": "Edm.ComplexType",
+      "fields": [
+        {
+          "name": "source",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "region",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "country",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "product_series",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "product_model",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "version",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "created_at",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        },
+        {
+          "name": "updated_at",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": false,
+          "retrievable": true,
+          "stored": true,
+          "sortable": false,
+          "facetable": false,
+          "key": false,
+          "synonymMaps": []
+        }
+      ]
+    }
+  ],
+  "scoringProfiles": [],
+  "corsOptions": {
+    "allowedOrigins": [
+      ""
+    ],
+    "maxAgeInSeconds": 300
+  },
+  "suggesters": [],
+  "analyzers": [],
+  "normalizers": [],
+  "tokenizers": [],
+  "tokenFilters": [],
+  "charFilters": [],
+  "similarity": {
+    "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
+  },
+  "semantic": {
+    "defaultConfiguration": "json-data-rag-demo05-semantic-configuration",
+    "configurations": [
+      {
+        "name": "json-data-rag-demo05-semantic-configuration",
+        "flightingOptIn": false,
+        "rankingOrder": "BoostedRerankerScore",
+        "prioritizedFields": {
+          "prioritizedContentFields": [
+            {
+              "fieldName": "chunk"
+            }
+          ],
+          "prioritizedKeywordsFields": [
+            {
+              "fieldName": "metadata/source"
+            },
+            {
+              "fieldName": "metadata/region"
+            },
+            {
+              "fieldName": "metadata/country"
+            },
+            {
+              "fieldName": "metadata/product_series"
+            },
+            {
+              "fieldName": "metadata/product_model"
+            },
+            {
+              "fieldName": "metadata/version"
+            },
+            {
+              "fieldName": "metadata/created_at"
+            },
+            {
+              "fieldName": "metadata/updated_at"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "vectorSearch": {
+    "algorithms": [
+      {
+        "name": "json-data-rag-demo05-algorithm",
+        "kind": "hnsw",
+        "hnswParameters": {
+          "metric": "cosine",
+          "m": 4,
+          "efConstruction": 400,
+          "efSearch": 500
+        }
+      }
+    ],
+    "profiles": [
+      {
+        "name": "json-data-rag-demo05-azureOpenAi-text-profile",
+        "algorithm": "json-data-rag-demo05-algorithm",
+        "vectorizer": "json-data-rag-demo05-azureOpenAi-text-vectorizer"
+      }
+    ],
+    "vectorizers": [
+      {
+        "name": "json-data-rag-demo05-azureOpenAi-text-vectorizer",
+        "kind": "azureOpenAI",
+        "azureOpenAIParameters": {
+          "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
+          "deploymentId": "text-embedding-3-large",
+          "apiKey": "<redacted>",
+          "modelName": "text-embedding-3-large"
+        }
+      }
+    ],
+    "compressions": []
+  }
+}

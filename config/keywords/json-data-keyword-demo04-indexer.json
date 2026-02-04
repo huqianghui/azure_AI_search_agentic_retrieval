@@ -1,0 +1,51 @@
+{
+  "@odata.context": "https://ai-search-southeast-asia.search.windows.net/$metadata#indexers/$entity",
+  "@odata.etag": "\"0x8DE62C96208E13D\"",
+  "name": "json-data-keyword-demo04-indexer",
+  "description": null,
+  "dataSourceName": "json-data-keyword-demo04-datasource",
+  "skillsetName": "json-data-keyword-demo04-skillset",
+  "targetIndexName": "json-data-keyword-demo04",
+  "disabled": null,
+  "schedule": null,
+  "parameters": {
+    "batchSize": null,
+    "maxFailedItems": null,
+    "maxFailedItemsPerBatch": null,
+    "configuration": {
+      "parsingMode": "jsonArray",
+      "dataToExtract": "contentAndMetadata"
+    }
+  },
+  "fieldMappings": [
+    {
+      "sourceFieldName": "AzureSearch_DocumentKey",
+      "targetFieldName": "id",
+      "mappingFunction": {
+        "name": "base64Encode",
+        "parameters": {
+          "useHttpServerUtilityUrlTokenEncode": false
+        }
+      }
+    }
+  ],
+  "outputFieldMappings": [
+    {
+      "sourceFieldName": "/document/page_content/persons",
+      "targetFieldName": "persons",
+      "mappingFunction": null
+    },
+    {
+      "sourceFieldName": "/document/page_content/locations",
+      "targetFieldName": "locations",
+      "mappingFunction": null
+    },
+    {
+      "sourceFieldName": "/document/page_content/organizations",
+      "targetFieldName": "organizations",
+      "mappingFunction": null
+    }
+  ],
+  "cache": null,
+  "encryptionKey": null
+}

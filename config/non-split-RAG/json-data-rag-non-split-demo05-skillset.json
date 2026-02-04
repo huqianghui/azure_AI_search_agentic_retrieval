@@ -1,0 +1,30 @@
+{
+  "@odata.etag": "\"0x8DE62CF6C6544EA\"",
+  "name": "json-data-rag-non-split-demo05-skillset",
+  "description": "Skillset to generate embeddings without chunking - using complete records",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "name": "#1",
+      "context": "/document",
+      "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
+      "apiKey": "<redacted>",
+      "deploymentId": "text-embedding-3-large",
+      "dimensions": 3072,
+      "modelName": "text-embedding-3-large",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/page_content",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "targetName": "page_content_vector"
+        }
+      ]
+    }
+  ]
+}

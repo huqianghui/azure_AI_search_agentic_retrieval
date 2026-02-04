@@ -1,0 +1,246 @@
+{
+  "@odata.etag": "\"0x8DE62C9F187F5E1\"",
+  "name": "json-data-keyword-demo04",
+  "purviewEnabled": false,
+  "fields": [
+    {
+      "name": "id",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": true,
+      "retrievable": true,
+      "stored": true,
+      "sortable": true,
+      "facetable": true,
+      "key": true,
+      "synonymMaps": []
+    },
+    {
+      "name": "persons",
+      "type": "Collection(Edm.String)",
+      "searchable": true,
+      "filterable": true,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": true,
+      "key": false,
+      "analyzer": "standard.lucene",
+      "synonymMaps": []
+    },
+    {
+      "name": "locations",
+      "type": "Collection(Edm.String)",
+      "searchable": true,
+      "filterable": true,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": true,
+      "key": false,
+      "analyzer": "standard.lucene",
+      "synonymMaps": []
+    },
+    {
+      "name": "organizations",
+      "type": "Collection(Edm.String)",
+      "searchable": true,
+      "filterable": true,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": true,
+      "key": false,
+      "analyzer": "standard.lucene",
+      "synonymMaps": []
+    },
+    {
+      "name": "page_content",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "analyzer": "standard.lucene",
+      "synonymMaps": []
+    },
+    {
+      "name": "metadata",
+      "type": "Edm.ComplexType",
+      "fields": [
+        {
+          "name": "source",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "region",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "country",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "product_series",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "product_model",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "version",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "created_at",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        },
+        {
+          "name": "updated_at",
+          "type": "Edm.String",
+          "searchable": true,
+          "filterable": true,
+          "retrievable": true,
+          "stored": true,
+          "sortable": true,
+          "facetable": true,
+          "key": false,
+          "analyzer": "standard.lucene",
+          "synonymMaps": []
+        }
+      ]
+    }
+  ],
+  "scoringProfiles": [],
+  "corsOptions": {
+    "allowedOrigins": [
+      "*"
+    ],
+    "maxAgeInSeconds": 300
+  },
+  "suggesters": [],
+  "analyzers": [],
+  "normalizers": [],
+  "tokenizers": [],
+  "tokenFilters": [],
+  "charFilters": [],
+  "similarity": {
+    "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
+  },
+  "semantic": {
+    "defaultConfiguration": "json-data-keyword-demo04-semantic-configuration",
+    "configurations": [
+      {
+        "name": "json-data-keyword-demo04-semantic-configuration",
+        "flightingOptIn": false,
+        "rankingOrder": "BoostedRerankerScore",
+        "prioritizedFields": {
+          "prioritizedContentFields": [
+            {
+              "fieldName": "page_content"
+            }
+          ],
+          "prioritizedKeywordsFields": [
+            {
+              "fieldName": "metadata/source"
+            },
+            {
+              "fieldName": "metadata/region"
+            },
+            {
+              "fieldName": "metadata/country"
+            },
+            {
+              "fieldName": "metadata/product_series"
+            },
+            {
+              "fieldName": "metadata/product_model"
+            },
+            {
+              "fieldName": "metadata/version"
+            },
+            {
+              "fieldName": "metadata/created_at"
+            },
+            {
+              "fieldName": "metadata/updated_at"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "vectorSearch": {
+    "algorithms": [],
+    "profiles": [],
+    "vectorizers": [],
+    "compressions": []
+  }
+}

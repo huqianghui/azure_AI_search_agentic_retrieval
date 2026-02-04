@@ -1,0 +1,125 @@
+{
+  "@odata.etag": "\"0x8DE62CF6C6544EA\"",
+  "name": "json-data-rag-demo05-skillset",
+  "description": "Skillset to chunk documents and generate embeddings",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.SplitSkill",
+      "name": "#1",
+      "description": "Split skill to chunk documents",
+      "context": "/document",
+      "defaultLanguageCode": "en",
+      "textSplitMode": "pages",
+      "maximumPageLength": 2000,
+      "pageOverlapLength": 500,
+      "maximumPagesToTake": 0,
+      "unit": "characters",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/page_content",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "textItems",
+          "targetName": "pages"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "name": "#2",
+      "context": "/document/pages/*",
+      "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
+      "apiKey": "<redacted>",
+      "deploymentId": "text-embedding-3-large",
+      "dimensions": 3072,
+      "modelName": "text-embedding-3-large",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/pages/*",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "targetName": "text_vector"
+        }
+      ]
+    }
+  ],
+  "indexProjections": {
+    "selectors": [
+      {
+        "targetIndexName": "json-data-rag-demo05",
+        "parentKeyFieldName": "parent_id",
+        "sourceContext": "/document/pages/*",
+        "mappings": [
+          {
+            "name": "text_vector",
+            "source": "/document/pages/*/text_vector",
+            "inputs": []
+          },
+          {
+            "name": "chunk",
+            "source": "/document/pages/*",
+            "inputs": []
+          },
+          {
+            "name": "metadata",
+            "sourceContext": "/document/metadata",
+            "inputs": [
+              {
+                "name": "source",
+                "source": "/document/metadata/source",
+                "inputs": []
+              },
+              {
+                "name": "region",
+                "source": "/document/metadata/region",
+                "inputs": []
+              },
+              {
+                "name": "country",
+                "source": "/document/metadata/country",
+                "inputs": []
+              },
+              {
+                "name": "product_series",
+                "source": "/document/metadata/product_series",
+                "inputs": []
+              },
+              {
+                "name": "product_model",
+                "source": "/document/metadata/product_model",
+                "inputs": []
+              },
+              {
+                "name": "version",
+                "source": "/document/metadata/version",
+                "inputs": []
+              },
+              {
+                "name": "created_at",
+                "source": "/document/metadata/created_at",
+                "inputs": []
+              },
+              {
+                "name": "updated_at",
+                "source": "/document/metadata/updated_at",
+                "inputs": []
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "projectionMode": "skipIndexingParentDocuments"
+    }
+  }
+}
