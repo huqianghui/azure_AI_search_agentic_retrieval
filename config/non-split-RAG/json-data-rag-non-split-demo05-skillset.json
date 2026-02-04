@@ -4,8 +4,40 @@
   "description": "Skillset to generate embeddings without chunking - using complete records",
   "skills": [
     {
-      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
       "name": "#1",
+      "description": "Custom skill to extract id, question, and answer from page_content",
+      "context": "/document",
+      "uri": "https://azure-ai-search-split-custom-skill.azurewebsites.net/api/page_content_split_http_trigger",
+      "httpMethod": "POST",
+      "timeout": "PT30S",
+      "batchSize": 1,
+      "degreeOfParallelism": null,
+      "inputs": [
+        {
+          "name": "page_content",
+          "source": "/document/page_content"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "id",
+          "targetName": "extracted_id"
+        },
+        {
+          "name": "question",
+          "targetName": "question"
+        },
+        {
+          "name": "answer",
+          "targetName": "answer"
+        }
+      ],
+      "httpHeaders": {}
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "name": "#2",
       "context": "/document",
       "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
       "apiKey": "<redacted>",

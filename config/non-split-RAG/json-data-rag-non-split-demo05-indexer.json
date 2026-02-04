@@ -32,6 +32,14 @@
     {
       "sourceFieldName": "/document/page_content_vector",
       "targetFieldName": "page_content_vector"
+    },
+    {
+      "sourceFieldName": "/document/question",
+      "targetFieldName": "question"
+    },
+    {
+      "sourceFieldName": "/document/answer",
+      "targetFieldName": "answer"
     }
   ],
   "cache": null,
