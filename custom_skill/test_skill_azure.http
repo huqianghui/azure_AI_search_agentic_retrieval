@@ -1,0 +1,60 @@
+### Azure AI Search Custom Skill - Azure部署测试
+### 使用 VS Code 的 REST Client 扩展运行这些测试
+
+@azureUrl = https://azure-ai-search-split-custom-skill.azurewebsites.net
+@endpoint = {{azureUrl}}/api/page_content_split_http_trigger
+
+### 获取Function Key (需要先在Azure Portal获取)
+### 替换下面的 YOUR_FUNCTION_KEY
+@functionKey = YOUR_FUNCTION_KEY_HERE
+
+### 测试用例 1: 单条记录测试（完整的产品参数）
+POST {{endpoint}}?code={{functionKey}}
+Content-Type: application/json
+
+{
+    "values": [
+        {
+            "recordId": "r1",
+            "data": {
+                "page_content": "id:5000\n\nquestion: [提问方式1]SM311LM V3.30 Parameters\n\nanswer: <Brief>The SM311LM V3.30 is a 1000BASE-SX multi-mode SFP transceiver supporting 1.25 Gbps data rates and IEEE 802.3z standards. It features Digital Diagnostic Monitoring (DDM), hot-swappable capability, and transmission distances up to 550 m over 50/125μm or 62.5/125μm multi-mode fiber. With an LC/UPC port and 850 nm wavelength, this compact module (55.4 x 13.7 x 12.9 mm) operates in temperatures from 0°C to 70°C, ensuring reliable performance for high-speed networking applications.</Brief><Specification>Standards and Protocols | IEEE 802.3z, CSMA/CD, TCP/IP\nWave Length | 850nm\nDimensions ( W x D x H ) | 2.2*0.5*0.5 in (55.4*13.7*12.9 mm)\nPower Supply | 3.3V\nSafety & Emission | FCC, CE\nCable | Multi-mode Fiber\nFiber Type | 50/125μm or 62.5/125μm Multi-mode\nMax. Cable Length | 550m\nData Rate | 1.25Gbps\nPort Type | LC/UPC\nHardware Features | • DDM• SFP-MSA• Hot Swappable\nPackage Content | • SM311LM• Installation Guide\nEnvironment | • Operating Temperature: 0℃~70℃ (32℉~158℉)• Storage Temperature: -40℃~80℃ (-40℉~176℉)• Operating Humidity: 10%~90% non-condensing• Storage Humidity: 5%~90% non-condensing\n\nInstallation Guide: https://support.omadanetworks.com/en/document/3736/</Specification>"
+            }
+        }
+    ]
+}
+
+### 测试用例 2: 多条记录批量处理
+POST {{endpoint}}?code={{functionKey}}
+Content-Type: application/json
+
+{
+    "values": [
+        {
+            "recordId": "r1",
+            "data": {
+                "page_content": "id:5000\n\nquestion: [提问方式1]SM311LM V3.30 Parameters\n\nanswer: <Brief>The SM311LM V3.30 is a 1000BASE-SX multi-mode SFP transceiver.</Brief>"
+            }
+        },
+        {
+            "recordId": "r2",
+            "data": {
+                "page_content": "id:5001\n\nquestion: [提问方式2]产品规格说明\n\nanswer: <Brief>这是一个测试产品。</Brief><Specification>规格参数信息</Specification>"
+            }
+        }
+    ]
+}
+
+### 测试用例 3: 错误处理 - 缺少page_content字段
+POST {{endpoint}}?code={{functionKey}}
+Content-Type: application/json
+
+{
+    "values": [
+        {
+            "recordId": "r1",
+            "data": {
+                "other_field": "some value"
+            }
+        }
+    ]
+}

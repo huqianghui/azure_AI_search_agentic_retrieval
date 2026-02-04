@@ -133,3 +133,10 @@ __blobstorage__
 __queuestorage__
 __azurite_db*__.json
 .python_packages
+# Sensitive files - API keys, credentials
+*.http.local
+*.env.local
+.secrets
+
+# Azure config with secrets
+*.azureconfig
