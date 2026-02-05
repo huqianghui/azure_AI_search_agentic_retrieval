@@ -1,6 +1,6 @@
 {
   "@odata.etag": "\"0x8DE62D0260EED0C\"",
-  "name": "json-data-rag-non-split-demo05",
+  "name": "json-data-rag-custom-skill-demo05",
   "purviewEnabled": false,
   "fields": [
     {
@@ -16,7 +16,7 @@
       "synonymMaps": []
     },
     {
-      "name": "page_content",
+      "name": "question",
       "type": "Edm.String",
       "searchable": true,
       "filterable": false,
@@ -29,7 +29,7 @@
       "synonymMaps": []
     },
     {
-      "name": "page_content_vector",
+      "name": "question_vector",
       "type": "Collection(Edm.Single)",
       "searchable": true,
       "filterable": false,
@@ -39,7 +39,34 @@
       "facetable": false,
       "key": false,
       "dimensions": 3072,
-      "vectorSearchProfile": "json-data-rag-non-split-demo05-azureOpenAi-text-profile",
+      "vectorSearchProfile": "json-data-rag-custom-skill-demo05-azureOpenAi-text-profile",
+      "synonymMaps": []
+    },
+    {
+      "name": "answer",
+      "type": "Edm.String",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "analyzer": "standard.lucene",
+      "synonymMaps": []
+    },
+    {
+      "name": "answer_vector",
+      "type": "Collection(Edm.Single)",
+      "searchable": true,
+      "filterable": false,
+      "retrievable": true,
+      "stored": true,
+      "sortable": false,
+      "facetable": false,
+      "key": false,
+      "dimensions": 3072,
+      "vectorSearchProfile": "json-data-rag-custom-skill-demo05-azureOpenAi-text-profile",
       "synonymMaps": []
     },
     {
@@ -162,16 +189,19 @@
     "@odata.type": "#Microsoft.Azure.Search.BM25Similarity"
   },
   "semantic": {
-    "defaultConfiguration": "json-data-rag-non-split-demo05-semantic-configuration",
+    "defaultConfiguration": "json-data-rag-custom-skill-demo05-semantic-configuration",
     "configurations": [
       {
-        "name": "json-data-rag-non-split-demo05-semantic-configuration",
+        "name": "json-data-rag-custom-skill-demo05-semantic-configuration",
         "flightingOptIn": false,
         "rankingOrder": "BoostedRerankerScore",
         "prioritizedFields": {
+          "titleField": {
+            "fieldName": "question"
+          },
           "prioritizedContentFields": [
             {
-              "fieldName": "page_content"
+              "fieldName": "answer"
             }
           ],
           "prioritizedKeywordsFields": [
@@ -207,7 +237,7 @@
   "vectorSearch": {
     "algorithms": [
       {
-        "name": "json-data-rag-non-split-demo05-algorithm",
+        "name": "json-data-rag-custom-skill-demo05-algorithm",
         "kind": "hnsw",
         "hnswParameters": {
           "metric": "cosine",
@@ -219,14 +249,14 @@
     ],
     "profiles": [
       {
-        "name": "json-data-rag-non-split-demo05-azureOpenAi-text-profile",
-        "algorithm": "json-data-rag-non-split-demo05-algorithm",
-        "vectorizer": "json-data-rag-non-split-demo05-azureOpenAi-text-vectorizer"
+        "name": "json-data-rag-custom-skill-demo05-azureOpenAi-text-profile",
+        "algorithm": "json-data-rag-custom-skill-demo05-algorithm",
+        "vectorizer": "json-data-rag-custom-skill-demo05-azureOpenAi-text-vectorizer"
       }
     ],
     "vectorizers": [
       {
-        "name": "json-data-rag-non-split-demo05-azureOpenAi-text-vectorizer",
+        "name": "json-data-rag-custom-skill-demo05-azureOpenAi-text-vectorizer",
         "kind": "azureOpenAI",
         "azureOpenAIParameters": {
           "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",

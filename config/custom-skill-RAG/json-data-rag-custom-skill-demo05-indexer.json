@@ -1,12 +1,12 @@
 {
   "@odata.context": "https://ai-search-southeast-asia.search.windows.net/$metadata#indexers/$entity",
   "@odata.etag": "\"0x8DE62CF99807AD9\"",
-  "name": "json-data-rag-non-split-demo05-indexer",
+  "name": "json-data-rag-custom-skill-demo05-indexer",
   "description": null,
   "dataSourceName": "json-data-rag-demo05-datasource",
-  "skillsetName": "json-data-rag-non-split-demo05-skillset",
-  "targetIndexName": "json-data-rag-non-split-demo05",
-  "disabled": null,
+  "skillsetName": "json-data-rag-custom-skill-demo05-skillset",
+  "targetIndexName": "json-data-rag-custom-skill-demo05",
+  "disabled": true,
   "schedule": null,
   "parameters": {
     "batchSize": null,
@@ -30,8 +30,20 @@
   ],
   "outputFieldMappings": [
     {
-      "sourceFieldName": "/document/page_content_vector",
-      "targetFieldName": "page_content_vector"
+      "sourceFieldName": "/document/question",
+      "targetFieldName": "question"
+    },
+    {
+      "sourceFieldName": "/document/answer",
+      "targetFieldName": "answer"
+    },
+    {
+      "sourceFieldName": "/document/question_vector",
+      "targetFieldName": "question_vector"
+    },
+    {
+      "sourceFieldName": "/document/answer_vector",
+      "targetFieldName": "answer_vector"
     }
   ],
   "cache": null,

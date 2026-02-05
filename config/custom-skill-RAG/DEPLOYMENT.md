@@ -56,6 +56,25 @@ api-key: [admin-key]
 
 ### 2. 更新或创建技能集
 
+**重要：配置认证密钥**
+
+在部署技能集之前，需要获取并配置以下密钥：
+
+1. **Azure Function Key**（自定义技能认证）
+   - 登录 [Azure Portal](https://portal.azure.com)
+   - 找到 Function App: `azure-ai-search-split-custom-skill`
+   - 进入 **Functions** → `page_content_split_http_trigger`
+   - 点击 **Function Keys** → 复制 `default` key
+   - 替换 skillset 配置中的 `<YOUR_FUNCTION_KEY>`
+
+2. **Azure OpenAI API Key**（Embedding 技能认证）
+   - 在 Azure Portal 找到你的 OpenAI 资源
+   - 进入 **Keys and Endpoint**
+   - 复制 Key 1 或 Key 2
+   - 替换 skillset 配置中的 `<redacted>`
+
+然后创建或更新技能集：
+
 ```bash
 PUT https://[service-name].search.windows.net/skillsets/json-data-rag-non-split-demo05-skillset?api-version=2024-07-01
 Content-Type: application/json
@@ -64,8 +83,9 @@ api-key: [admin-key]
 [json-data-rag-non-split-demo05-skillset.json 文件内容]
 ```
 
-**注意**: 需要替换以下占位符：
-- `<redacted>`: 替换为实际的 Azure OpenAI API Key
+**需要替换的占位符：**
+- `<YOUR_FUNCTION_KEY>`: Azure Function 的访问密钥
+- `<redacted>`: Azure OpenAI API Key
 
 ### 3. 更新或创建索引器
 

@@ -1,0 +1,86 @@
+{
+  "@odata.etag": "\"0x8DE62CF6C6544EA\"",
+  "name": "json-data-rag-custom-skill-demo05-skillset",
+  "description": "Skillset to generate embeddings without chunking - using complete records",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Custom.WebApiSkill",
+      "name": "#1",
+      "description": "Custom skill to extract id, question, and answer from page_content",
+      "context": "/document",
+      "uri": "https://zz08bgqx-7071.asse.devtunnels.ms/api/page_content_split_http_trigger",
+      "httpMethod": "POST",
+      "timeout": "PT30S",
+      "batchSize": 1,
+      "degreeOfParallelism": null,
+      "inputs": [
+        {
+          "name": "page_content",
+          "source": "/document/page_content"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "id",
+          "targetName": "extracted_id"
+        },
+        {
+          "name": "question",
+          "targetName": "question"
+        },
+        {
+          "name": "answer",
+          "targetName": "answer"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "name": "#2",
+      "description": "Generate embeddings for question field",
+      "context": "/document",
+      "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
+      "apiKey": "<redacted>",
+      "deploymentId": "text-embedding-3-large",
+      "dimensions": 3072,
+      "modelName": "text-embedding-3-large",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/question",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "targetName": "question_vector"
+        }
+      ]
+    },
+    {
+      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "name": "#3",
+      "description": "Generate embeddings for answer field",
+      "context": "/document",
+      "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
+      "apiKey": "<redacted>",
+      "deploymentId": "text-embedding-3-large",
+      "dimensions": 3072,
+      "modelName": "text-embedding-3-large",
+      "inputs": [
+        {
+          "name": "text",
+          "source": "/document/answer",
+          "inputs": []
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "targetName": "answer_vector"
+        }
+      ]
+    }
+  ]
+}

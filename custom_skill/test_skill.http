@@ -1,7 +1,7 @@
 ### Azure AI Search Custom Skill - 测试用例
 ### 使用 VS Code 的 REST Client 扩展运行这些测试
 
-@baseUrl = http://localhost:7071
+@baseUrl = https://zz08bgqx-7071.asse.devtunnels.ms
 @endpoint = {{baseUrl}}/api/page_content_split_http_trigger
 
 ### 测试用例 1: 单条记录测试（完整的产品参数）

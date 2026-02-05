@@ -1,12 +1,12 @@
 ### Azure AI Search Custom Skill - Azure部署测试
 ### 使用 VS Code 的 REST Client 扩展运行这些测试
 
-@azureUrl = https://azure-ai-search-split-custom-skill.azurewebsites.net
+@azureUrl = https://azure-ai-search-split-custom-skill3.azurewebsites.net
 @endpoint = {{azureUrl}}/api/page_content_split_http_trigger
 
 ### 获取Function Key (需要先在Azure Portal获取)
 ### 替换下面的 YOUR_FUNCTION_KEY
-@functionKey = YOUR_FUNCTION_KEY_HERE
+@functionKey = YOUR_FUNCTION_KEY
 
 ### 测试用例 1: 单条记录测试（完整的产品参数）
 POST {{endpoint}}?code={{functionKey}}
