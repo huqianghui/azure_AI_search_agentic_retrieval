@@ -1,0 +1,83 @@
+{
+  "@odata.context": "https://ai-search-southeast-asia.search.windows.net/$metadata#indexers/$entity",
+  "@odata.etag": "\"0x8DE62CF99807AD9\"",
+  "name": "json-data-rag-flatten-demo05-indexer",
+  "description": null,
+  "dataSourceName": "json-data-rag-demo05-datasource",
+  "skillsetName": "json-data-rag-custom-skill-demo05-skillset",
+  "targetIndexName": "json-data-rag-flatten-demo05",
+  "disabled": false,
+  "schedule": null,
+  "parameters": {
+    "batchSize": null,
+    "maxFailedItems": null,
+    "maxFailedItemsPerBatch": null,
+    "configuration": {
+      "parsingMode": "jsonArray"
+    }
+  },
+  "fieldMappings": [
+    {
+      "sourceFieldName": "AzureSearch_DocumentKey",
+      "targetFieldName": "id",
+      "mappingFunction": {
+        "name": "base64Encode",
+        "parameters": {
+          "useHttpServerUtilityUrlTokenEncode": false
+        }
+      }
+    }
+  ],
+  "outputFieldMappings": [
+    {
+      "sourceFieldName": "/document/question",
+      "targetFieldName": "question"
+    },
+    {
+      "sourceFieldName": "/document/answer",
+      "targetFieldName": "answer"
+    },
+    {
+      "sourceFieldName": "/document/question_vector",
+      "targetFieldName": "question_vector"
+    },
+    {
+      "sourceFieldName": "/document/answer_vector",
+      "targetFieldName": "answer_vector"
+    },
+    {
+      "sourceFieldName": "/document/metadata/source",
+      "targetFieldName": "source"
+    },
+    {
+      "sourceFieldName": "/document/metadata/region",
+      "targetFieldName": "region"
+    },
+    {
+      "sourceFieldName": "/document/metadata/country",
+      "targetFieldName": "country"
+    },
+    {
+      "sourceFieldName": "/document/metadata/product_series",
+      "targetFieldName": "product_series"
+    },
+    {
+      "sourceFieldName": "/document/metadata/product_model",
+      "targetFieldName": "product_model"
+    },
+    {
+      "sourceFieldName": "/document/metadata/version",
+      "targetFieldName": "version"
+    },
+    {
+      "sourceFieldName": "/document/metadata/created_at",
+      "targetFieldName": "created_at"
+    },
+    {
+      "sourceFieldName": "/document/metadata/updated_at",
+      "targetFieldName": "updated_at"
+    }
+  ],
+  "cache": null,
+  "encryptionKey": null
+}

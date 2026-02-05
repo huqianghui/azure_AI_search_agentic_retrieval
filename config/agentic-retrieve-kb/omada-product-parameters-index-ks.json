@@ -1,0 +1,70 @@
+{
+  "@odata.context": "https://ai-search-southeast-asia.search.windows.net/$metadata#knowledgesources/$entity",
+  "@odata.etag": "\"0x8DE64668C985DAE\"",
+  "name": "omada-product-parameters-index-ks",
+  "kind": "searchIndex",
+  "description": "**Description:** TP-Link Omada and VIGI product technical specifications database. Contains detailed parameters for 400+ networking products including: WiFi access points (ceiling-mount, wall-plate, outdoor, GPON), PoE switches (managed, unmanaged, industrial), routers (wired, WiFi, 4G/5G, DSL), PoE adapters, SFP modules, media converters, hardware controllers, and VIGI security cameras/NVRs. Each entry includes product model, version, brief description, full technical specifications (interfaces, power, dimensions, wireless standards, security features, protocols), metadata (series, region), and official documentation links. Data sourced from official TP-Link Omada website. Use this datasource for technical queries about Omada/VIGI product capabilities, specifications comparison, compatibility checks, and deployment planning.\n\n**Query Examples:**\n- \"What is the PoE budget of SG2218P switch?\"\n- \"Compare WiFi 6 vs WiFi 7 access points specifications\"\n- \"Which outdoor AP supports mesh networking?\"\n- \"Find PoE adapters supporting 802.3bt standard\"",
+  "encryptionKey": null,
+  "searchIndexParameters": {
+    "searchIndexName": "json-data-rag-flatten-demo05",
+    "semanticConfigurationName": "json-data-rag-flatten-demo05-semantic-configuration",
+    "sourceDataFields": [
+      {
+        "name": "answer"
+      },
+      {
+        "name": "country"
+      },
+      {
+        "name": "product_model"
+      },
+      {
+        "name": "product_series"
+      },
+      {
+        "name": "question"
+      },
+      {
+        "name": "region"
+      },
+      {
+        "name": "source"
+      },
+      {
+        "name": "version"
+      }
+    ],
+    "searchFields": [
+      {
+        "name": "answer"
+      },
+      {
+        "name": "country"
+      },
+      {
+        "name": "product_model"
+      },
+      {
+        "name": "product_series"
+      },
+      {
+        "name": "question"
+      },
+      {
+        "name": "region"
+      },
+      {
+        "name": "source"
+      },
+      {
+        "name": "version"
+      }
+    ]
+  },
+  "azureBlobParameters": null,
+  "mcpToolParameters": null,
+  "webParameters": null,
+  "remoteSharePointParameters": null,
+  "indexedSharePointParameters": null,
+  "indexedOneLakeParameters": null
+}

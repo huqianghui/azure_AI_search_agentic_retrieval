@@ -1,0 +1,30 @@
+{
+  "@odata.context": "https://ai-search-southeast-asia.search.windows.net/$metadata#knowledgebases/$entity",
+  "@odata.etag": "\"0x8DE646432284374\"",
+  "name": "omada-product-parameters-kb",
+  "description": "# Omada Product Parameters Data Source\n\n**Description:** TP-Link Omada and VIGI product technical specifications database. Contains detailed parameters for 400+ networking products including: WiFi access points (ceiling-mount, wall-plate, outdoor, GPON), PoE switches (managed, unmanaged, industrial), routers (wired, WiFi, 4G/5G, DSL), PoE adapters, SFP modules, media converters, hardware controllers, and VIGI security cameras/NVRs. Each entry includes product model, version, brief description, full technical specifications (interfaces, power, dimensions, wireless standards, security features, protocols), metadata (series, region), and official documentation links. Data sourced from official TP-Link Omada website. Use this datasource for technical queries about Omada/VIGI product capabilities, specifications comparison, compatibility checks, and deployment planning.\n\n**Query Examples:**\n- \"What is the PoE budget of SG2218P switch?\"\n- \"Compare WiFi 6 vs WiFi 7 access points specifications\"\n- \"Which outdoor AP supports mesh networking?\"\n- \"Find PoE adapters supporting 802.3bt standard\"",
+  "retrievalInstructions": "When retrieving information from this Omada product parameters datasource:\n\n1. **Query Understanding**: Parse user queries to identify:\n   - Product model names (e.g., EAP655-Wall, SG2218P, POE370S)\n   - Product categories: WiFi AP, Switch, Router, PoE Adapter, Media Converter, Controller, VIGI Camera/NVR\n   - Technical attributes: PoE budget, port count, wireless standards (WiFi 6/6E/7), speed, coverage, power consumption\n   - Use case context: indoor/outdoor, industrial, enterprise, SMB deployment\n\n2. **Search Strategy**:\n   - For model-specific queries: Match exact product_model in metadata\n   - For category queries: Filter by product_series (e.g., \"omada-wifi-ceiling-mount\", \"omada-switch-access\")\n   - For specification queries: Search within page_content <Specification> tags\n   - For feature queries: Search within <Brief> section for overview, <Specification> for details\n\n3. **Key Searchable Fields**:\n   - metadata.product_model: Exact product identifier\n   - metadata.product_series: Product category classification\n   - metadata.version: Hardware/firmware version\n   - page_content: Contains question patterns, Brief description, and full Specification\n\n4. **Multi-product Queries**: When comparing products or finding alternatives, retrieve multiple documents matching the criteria and rank by relevance to query intent.\n\n5. **Version Awareness**: Include version info (e.g., V1, V2.20) as products may have different specs across versions.",
+  "answerInstructions": "When answering questions using retrieved Omada product information:\n\n1. **Response Structure**:\n   - Lead with direct answer to the user's question\n   - Cite specific product model and version (e.g., \"The EAP655-Wall V1...\")\n   - Provide exact specifications from the <Specification> section\n   - Include relevant context from <Brief> when helpful\n\n2. **Technical Accuracy**:\n   - Quote exact values for specifications (power, dimensions, speeds, port counts)\n   - Preserve units (W, Mbps, mm, dBm, °C)\n   - Note standards compliance (IEEE 802.3af/at/bt, WiFi 6/6E/7, etc.)\n   - Mention limitations or conditions (e.g., \"requires 802.3at PoE input\")\n\n3. **Comparison Responses**:\n   - Use tables for multi-product comparisons\n   - Highlight key differentiators\n   - Group by relevant categories (PoE budget, wireless speed, port type)\n\n4. **Recommendation Responses**:\n   - Match user requirements to product capabilities\n   - Consider: coverage area, client capacity, PoE requirements, mounting type, environment (indoor/outdoor/industrial)\n   - Suggest compatible accessories when relevant (PoE adapters, SFP modules)\n\n5. **Documentation Links**:\n   - Include Installation Guide URL when available\n   - Reference official source: \"According to TP-Link Omada official specifications...\"\n\n6. **Handling Uncertainty**:\n   - If product not found: Suggest similar products or ask for clarification\n   - If specification not listed: State \"This specification is not documented for [product]\"\n   - For region-specific products: Note the region/country from metadata\n\n7. **Language Style**:\n   - Professional and technical\n   - Concise but complete\n   - Use bullet points for multiple specifications\n   - Avoid marketing language, focus on factual specs",
+  "outputMode": "answerSynthesis",
+  "knowledgeSources": [
+    {
+      "name": "omada-product-parameters-index-ks"
+    }
+  ],
+  "models": [
+    {
+      "kind": "azureOpenAI",
+      "azureOpenAIParameters": {
+        "resourceUri": "https://openai-hu-swendencentral.openai.azure.com",
+        "deploymentId": "gpt-5-mini",
+        "apiKey": "<redacted>",
+        "modelName": "gpt-5-mini",
+        "authIdentity": null
+      }
+    }
+  ],
+  "encryptionKey": null,
+  "retrievalReasoningEffort": {
+    "kind": "low"
+  }
+}
