@@ -10,7 +10,7 @@
 
 - 已安装 [Visual Studio Code](https://code.visualstudio.com/)
 - 已安装 [Azure Functions Core Tools](https://learn.microsoft.com/azure/azure-functions/functions-run-local)
-- 拥有 Microsoft 账号（用于 Dev Tunnels 认证）
+- 拥有 Microsoft Entra ID 账号或 GitHub 账号（用于 Dev Tunnels 认证）
 
 ## 安装 Dev Tunnels CLI
 
@@ -36,13 +36,37 @@ curl -sL https://aka.ms/DevTunnelCliInstall | bash
 
 ### 1. 登录 Dev Tunnels
 
-首次使用需要登录 Microsoft 账号：
+Dev Tunnels 支持多种认证方式，首次使用需要登录：
+
+#### 方式一：使用 Microsoft Entra ID 账号（默认）
 
 ```bash
 devtunnel user login
 ```
 
-会弹出浏览器进行 Microsoft 账号认证。登录成功后终端会显示确认信息。
+会弹出浏览器进行 Microsoft 账号认证。
+
+#### 方式二：使用 GitHub 账号（推荐，避免组织设备管理限制）
+
+```bash
+devtunnel user login -g
+```
+
+如果你的组织要求设备被 Intune 管理而无法使用 Microsoft 账号登录，可以使用 GitHub 账号作为替代。
+
+#### 方式三：使用设备码流程（无法弹出浏览器时）
+
+```bash
+# Microsoft Entra ID + 设备码
+devtunnel user login -d
+
+# GitHub + 设备码
+devtunnel user login -g -d
+```
+
+> **其他高级认证方式**：还支持 Entra Service Principal（`--sp-*` 参数）和 Azure Managed Identity（`--mi-*` 参数），适用于 CI/CD 等自动化场景。详见 `devtunnel user login --help`。
+
+登录成功后终端会显示确认信息。
 
 ### 2. 启动本地 Azure Functions
 
@@ -173,11 +197,66 @@ curl -X POST https://<your-tunnel-id>-7071.<region>.devtunnels.ms/api/page_conte
 }
 ```
 
+## 工作原理
+
+Dev Tunnels 本质是一个**反向隧道代理（Reverse Tunnel Proxy）**：
+
+```
+[外部请求] → [微软云端 Relay 服务器] ←长连接← [本地 devtunnel 客户端] → [localhost:7071]
+```
+
+**工作流程：**
+
+1. 本地 `devtunnel` 客户端启动后，与微软云端的 Relay 服务建立一个**持久的出站 WebSocket/HTTP2 连接**
+2. 云端分配一个公网 URL（如 `https://xxx-7071.asse.devtunnels.ms`）
+3. 外部请求到达该 URL 时，Relay 服务通过已建立的长连接将流量转发到本地客户端
+4. 本地客户端再将流量转发到指定的本地端口（如 `7071`）
+
+**关键点：** 因为是本地主动发起出站连接，所以不需要公网 IP、不需要配置防火墙或路由器端口转发。所有隧道方案的核心原理相同，区别在于中继点由谁提供、是否需要自建、安全策略如何配置。
+
+## 替代方案
+
+除了 Microsoft Dev Tunnels，还有多种工具可以实现相同的本地服务暴露功能：
+
+### 开源 / 第三方方案
+
+| 工具 | 特点 | 安装 | 使用示例 |
+|------|------|------|----------|
+| **[ngrok](https://ngrok.com/)** | 最流行的隧道工具，免费版有限制（限速、临时 URL） | `brew install ngrok` | `ngrok http 7071` |
+| **[Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/)** | 免费、无带宽限制、需 Cloudflare 账号 | `brew install cloudflared` | `cloudflared tunnel --url http://localhost:7071` |
+| **[frp](https://github.com/fatedier/frp)** | 纯开源自建方案，需要自己有公网服务器 | GitHub Releases 下载 | 配置 frps（服务端）+ frpc（客户端） |
+| **[bore](https://github.com/ekzhang/bore)** | Rust 写的极简隧道，可自建服务端 | `cargo install bore-cli` | `bore local 7071 --to bore.pub` |
+| **[localtunnel](https://github.com/localtunnel/localtunnel)** | Node.js 开源方案，零配置 | `npm install -g localtunnel` | `lt --port 7071` |
+| **[Tailscale Funnel](https://tailscale.com/kb/1223/funnel)** | 基于 WireGuard 的 mesh VPN + 公网暴露 | `brew install tailscale` | `tailscale funnel 7071` |
+
+### 云厂商方案
+
+| 厂商 | 方案 | 说明 |
+|------|------|------|
+| **Microsoft** | [Dev Tunnels](https://learn.microsoft.com/azure/developer/dev-tunnels/)（本方案） | 与 VS Code / Azure 生态深度集成 |
+| **GitHub** | [Codespaces 端口转发](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace) | Codespaces 环境内置，原理相同 |
+| **Google Cloud** | [IAP TCP Forwarding](https://cloud.google.com/iap/docs/using-tcp-forwarding) | 用于访问 GCP 内部资源，非公网暴露本地服务；一般需搭配 ngrok/cloudflared |
+| **AWS** | [SSM Session Manager 端口转发](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager.html) | 用于访问 EC2 内部端口，非公网暴露本地服务；一般需搭配 ngrok/cloudflared |
+
+### 方案选择建议
+
+| 场景 | 推荐方案 | 理由 |
+|------|----------|------|
+| 已在微软/GitHub 生态中 | **Dev Tunnels** | 与 VS Code、Azure Functions 无缝集成 |
+| 需要稳定、免费的生产级隧道 | **Cloudflare Tunnel** | 无带宽限制、免费、全球 CDN 加速 |
+| 快速临时调试（一次性） | **ngrok** | 最简单，一行命令即可 |
+| 完全自主控制、数据不经第三方 | **frp** | 开源自建，需自备公网服务器 |
+| 团队内网互联（P2P） | **Tailscale** | P2P mesh 网络，数据不经过中继 |
+| CI/CD 环境或无浏览器场景 | **bore** | 轻量、支持自建、无需登录 |
+
+> 💡 **提示**：对于本项目（Azure AI Search Custom Skill 开发调试），Dev Tunnels 是首选，因为它与 Azure 生态集成最好且支持 `--allow-anonymous` 满足 Indexer 调用需求。如果遇到组织账号限制，Cloudflare Tunnel 或 ngrok 是最佳替代。
+
 ## 常用命令参考
 
 | 命令 | 说明 |
 |------|------|
-| `devtunnel user login` | 登录 Microsoft 账号 |
+| `devtunnel user login` | 登录 Microsoft Entra ID 账号 |
+| `devtunnel user login -g` | 登录 GitHub 账号 |
 | `devtunnel user show` | 查看当前登录状态 |
 | `devtunnel host -p 7071 --allow-anonymous` | 创建临时隧道并暴露 7071 端口 |
 | `devtunnel list` | 列出所有已创建的隧道 |
